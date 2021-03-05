@@ -1,32 +1,84 @@
 package com.tts.swaggeruserlab.controller;
 
+import com.tts.swaggeruserlab.model.UserV1;
 import com.tts.swaggeruserlab.model.UserV2;
+import com.tts.swaggeruserlab.repository.UserRepositoryV2;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestMapping("/v2")
-@Api(value="menuItems", description = "Operations pertaining to menu items")
+@Api(value="users", description = "Operations pertaining to users")
 @RestController
 public class UserControllerV2 {
+
+
+    UserRepositoryV2 userRepositoryV2;
+
+    public UserControllerV2(UserRepositoryV2 userRepositoryV2) {
+        this.userRepositoryV2 = userRepositoryV2;
+    }
+
+    @GetMapping("/item/all")
+    public ResponseEntity<List<UserV2>> getAllUsers() {
+        return new ResponseEntity<>(new ArrayList<UserV2>(), HttpStatus.OK);
+    }
+
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successfully retrieved menu item"),
-            @ApiResponse(code = 4-1, message = "You are not authorized to view the menu item")
+            @ApiResponse(code = 200, message = "There is no longer the ability to get all users at once"),
+            @ApiResponse(code = 401, message = "You are not authorized to view the users")
     })
 
-    @ApiOperation(value = "Get all menu items", response = UserV2.class,
+    @ApiOperation(value = "Get all users and state", response = UserV2.class,
             responseContainer = "List")
-    @GetMapping("/user/all")
-    public ResponseEntity<List<UserV2>> getAllItems() {
-        return new ResponseEntity(new ArrayList<UserV2>(), HttpStatus.OK);
+    @GetMapping("all")
+    public UserV2 getUsers(@PathVariable(value="state") String state) {
+        return userRepositoryV2.findByState(state);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully retrieved user by id"),
+            @ApiResponse(code = 401, message = "You are not authorized to view user or id")
+    })
+    @ApiOperation(value = "Get user by id", response = UserV2.class,
+            responseContainer = "id")
+    @GetMapping("users/{id}")
+    public Optional<UserV2> getUserById(@PathVariable(value="id") Long id) {
+        return userRepositoryV2.findById(id);
+    }
+
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully created a new user"),
+            @ApiResponse(code = 401, message = "You are not authorized to create users")
+    })
+    @ApiOperation(value = "Create new user", response = UserV2.class,
+            responseContainer = "save")
+    @PostMapping("user")
+    public void createUser(@RequestBody UserV2 user) {
+        userRepositoryV2.save(user);
+    }
+    @ApiOperation(value = "Create user", response = UserV1.class,
+            responseContainer = "id")
+    @PutMapping("user/{id}")
+    public void createUser(@PathVariable(value="id") Long id, @RequestBody UserV2 user) {
+        userRepositoryV2.save(user);
+    }
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully deleted a user"),
+            @ApiResponse(code = 401, message = "You are not authorized to delete users")
+    })
+    @ApiOperation(value = "Delete user", response = UserV2.class,
+            responseContainer = "deleteById")
+    @DeleteMapping("user/{id}")
+    public void createUser(@PathVariable(value="id") Long id) {
+        userRepositoryV2.deleteById(id);
     }
 }

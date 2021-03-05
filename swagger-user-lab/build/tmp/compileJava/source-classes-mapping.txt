@@ -1,14 +1,18 @@
 com/tts/swaggeruserlab/SwaggerUserLabApplication.java
  com.tts.swaggeruserlab.SwaggerUserLabApplication
-com/tts/swaggeruserlab/model/UserV2.java
- com.tts.swaggeruserlab.model.UserV2
-com/tts/swaggeruserlab/model/UserV1.java
- com.tts.swaggeruserlab.model.UserV1
-com/tts/swaggeruserlab/controller/UserControllerV2.java
- com.tts.swaggeruserlab.controller.UserControllerV2
 com/tts/swaggeruserlab/controller/UserControllerV1.java
  com.tts.swaggeruserlab.controller.UserControllerV1
+com/tts/swaggeruserlab/repository/UserRepositoryV1.java
+ com.tts.swaggeruserlab.repository.UserRepositoryV1
+com/tts/swaggeruserlab/model/UserV1.java
+ com.tts.swaggeruserlab.model.UserV1
+ com.tts.swaggeruserlab.model.UserV1$UserV1Builder
 com/tts/swaggeruserlab/config/SwaggerConfig.java
  com.tts.swaggeruserlab.config.SwaggerConfig
-com/tts/swaggeruserlab/controller/UserController.java
- com.tts.swaggeruserlab.controller.UserController
+com/tts/swaggeruserlab/repository/UserRepositoryV2.java
+ com.tts.swaggeruserlab.repository.UserRepositoryV2
+com/tts/swaggeruserlab/model/UserV2.java
+ com.tts.swaggeruserlab.model.UserV2
+ com.tts.swaggeruserlab.model.UserV2$UserV2Builder
+com/tts/swaggeruserlab/controller/UserControllerV2.java
+ com.tts.swaggeruserlab.controller.UserControllerV2
